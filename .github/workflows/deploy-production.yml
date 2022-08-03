@@ -1,8 +1,13 @@
 name: Tests
-on: [pull_request]
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 jobs:
   Deploy-Production:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
