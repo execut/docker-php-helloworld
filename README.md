@@ -24,3 +24,13 @@ Finally, docker copies everything in src/ inside this repository to the /var/www
 ![Docker PHP App](https://image.ibb.co/cTxSf7/whale.png "Hello World")
 
 This was originally created to test Amazon Elastic Container Service which is why Moby Dock says "Hello ECS!"
+
+# CI/CD via Github Actions
+HOST: your host name
+USERNAME: host username for ssh
+KEY:
+```shell
+ssh-keygen -t ed25519 -a 200 -N "" -f ./vars/key
+cat vars/key.pub | ssh root@$HOST 'cat >> /home/$USERNAME/.ssh/authorized_keys'
+cat ./vars/key
+```
