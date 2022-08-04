@@ -14,16 +14,16 @@ jobs:
 
       - name: Build and tag image
         run: |
-          docker build -t execut/php-helloworld .
+          docker build . -t ghcr.io/execut/hello-world:latest
 
       - name: Run tests
-        run: docker run execut/php-helloworld ./test
+        run: docker run ghcr.io/execut/hello-world:latest ./test
 
       - name: Docker login
-        run: docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
+        run: docker login ghcr.io -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
 
       - name: Publish image
-        run: docker push "docker.pkg.github.com/execut/php-helloworld"
+        run: docker push ghcr.io/execut/php-helloworld:latest
 
       - name: Deploy on production server
         uses: arwynfr/actions-docker-context@v2
@@ -34,5 +34,5 @@ jobs:
           ssh_key: ${{ secrets.SSH_PUB_KEY }}
 
       - run: |
-          docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
-          docker --context prod-server -dp 8001:80 execut/php-helloworld
+          docker login ghcr.io -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
+          docker --context prod-server -dp 8001:80 ghcr.io/execut/hello-world:latest
