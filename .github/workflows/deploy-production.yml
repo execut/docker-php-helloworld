@@ -12,7 +12,7 @@ jobs:
     - name: executing remote ssh commands using ssh key
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd /var/www/hello-world && git pull
+        command: cd /var/www/hello-world && git pull && ./test
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.KEY}}

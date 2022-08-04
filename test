@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+use Tests\MainTest;
+
+require_once "./tests/MainTest.php";
+
+$test = new MainTest();
+$test->run();
+echo 'Tests passed';
