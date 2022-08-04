@@ -11,12 +11,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
     - name: Install PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: 8.1
+
     - name: Run tests
       run: ./test
+
     - name: Executing remote ssh commands using ssh key
       uses: garygrossgarten/github-action-ssh@release
       with:

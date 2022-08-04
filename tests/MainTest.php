@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests;
+
 class MainTest
 {
     public function run()
