@@ -9,10 +9,18 @@ jobs:
   Deploy-Production:
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using ssh key
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.1
+    - name: Run tests
+      run: ./test
+    - name: Executing remote ssh commands using ssh key
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: cd /var/www/hello-world && git pull && ./test
+        command: cd /var/www/hello-world && git pull
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.KEY}}
