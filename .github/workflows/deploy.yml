@@ -14,10 +14,10 @@ jobs:
 
       - name: Build and tag image
         run: |
-          docker build . -t ghcr.io/execut/hello-world:latest
+          docker build . -t ghcr.io/execut/php-helloworld:latest
 
       - name: Run tests
-        run: docker run ghcr.io/execut/hello-world:latest ./test
+        run: docker run ghcr.io/execut/php-helloworld:latest ./test
 
       - name: Docker login
         run: docker login ghcr.io -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
@@ -35,4 +35,4 @@ jobs:
 
       - run: |
           docker login ghcr.io -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
-          docker --context prod-server -dp 8001:80 ghcr.io/execut/hello-world:latest
+          docker --context prod-server -dp 8001:80 ghcr.io/execut/php-helloworld:latest
