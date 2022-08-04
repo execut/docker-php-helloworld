@@ -28,7 +28,7 @@ jobs:
       - name: Deploy on production server
         uses: arwynfr/actions-docker-context@v2
         with:
-          docker_host: 'ssh://${{ secrets.USERNAME }}@${{ secrets.HOST }}'
+          docker_host: ${{'ssh://', secrets.USERNAME, '@', secrets.HOST }}
           context_name: 'prod-server'
           ssh_cert: ${{ secrets.SSH_PRIV_KEY }}
           ssh_key: ${{ secrets.SSH_PUB_KEY }}
