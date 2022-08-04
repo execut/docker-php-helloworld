@@ -14,7 +14,7 @@ jobs:
 
       - name: Build and tag image
         run: |
-          docker build -t execut/php-helloworld" .
+          docker build -t execut/php-helloworld .
 
       - name: Run tests
         run: docker run execut/php-helloworld ./test
@@ -24,12 +24,9 @@ jobs:
 
       - name: Publish image
         run: docker push "docker.pkg.github.com/execut/php-helloworld"
-  Deploy-image:
-    runs-on: ubuntu-latest
-    name: 'Deploy on the production server'
-    steps:
 
-      - uses: arwynfr/actions-docker-context@v2
+      - name: Deploy on production server
+        uses: arwynfr/actions-docker-context@v2
         with:
           docker_host: 'ssh://${{ secrets.USERNAME }}@${{ secrets.HOST }}'
           context_name: 'prod-server'
