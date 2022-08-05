@@ -29,7 +29,7 @@ jobs:
       - name: Deploy on production server via Docker
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: docker login ghcr.io -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}} && docker run --pull -dp 8001:80 ghcr.io/execut/php-helloworld:latest
+          command: docker login ghcr.io -u ${{github.actor}} -p ${{secrets.GITHUB_TOKEN}} && docker run --pull -dp 8001:80 ghcr.io/execut/php-helloworld:latest
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.SSH_PRIV_KEY}}
