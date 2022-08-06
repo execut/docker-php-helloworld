@@ -54,9 +54,20 @@ sudo chmod 755 /usr/local/bin/minikube
 minikube version
 minikube start
 minikube node add
+alias kubectl="minikube kubectl -- "
 
-kubectl create serviceaccount github-actions
-kubectl create namespace php-helloworld
-kubectl create secret docker-registry github-container-registry --namespace=php-helloworld --docker-server=ghcr.io --docker-username=$USER --docker-password=$GH_TOKEN
+$ kubectl create serviceaccount github-actions
+serviceaccount/github-actions created
+$ kubectl create namespace php-helloworld
+namespace/php-helloworld created
+$ kubectl create secret docker-registry github-container-registry --namespace=php-helloworld --docker-server=ghcr.io --docker-username=$USER --docker-password=$GH_TOKEN
+secret/github-container-registry created
 
+cd /var/www/hello-world
+$ kubectl apply -f ./k8s/clusterrole.yaml 
+clusterrole.rbac.authorization.k8s.io/continuous-deployment created
+
+kubectl create clusterrolebinding continuous-deployment \
+    --clusterrole=continuous-deployment \
+    --serviceaccount=default:github-actions
 ```
