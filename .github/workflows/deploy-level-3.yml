@@ -1,11 +1,11 @@
 name: Deploy hard level
 on:
   workflow_run:
-    workflows: [Publish image]
+    workflows: [Deploy middle level]
     types:
       - completed
 jobs:
-  build:
+  Deploy-to-cluster:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
