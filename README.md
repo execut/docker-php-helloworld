@@ -26,11 +26,37 @@ Finally, docker copies everything in src/ inside this repository to the /var/www
 This was originally created to test Amazon Elastic Container Service which is why Moby Dock says "Hello ECS!"
 
 # CI/CD via Github Actions
+
+## Level 1:
 HOST: your host name
 USERNAME: host username for ssh
-KEY:
+SSH_PRIV_KEY:
 ```shell
 ssh-keygen -t ed25519 -a 200 -N "" -f ./vars/key
-cat vars/key.pub | ssh root@$HOST 'cat >> /home/$USERNAME/.ssh/authorized_keys'
-cat ./vars/key
+cat ./vars/key.pub | ssh root@$HOST 'cat >> /home/$USERNAME/.ssh/authorized_keys'
+SSH_PRIV_KEY=`cat ./vars/key`
+```
+
+## Level 2:
+```shell
+ssh $USER@$HOST
+sudo apt update
+sudo apt install docker
+usermod -a -G docker $USER
+
+```
+
+## Level 3:
+```shell
+wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+sudo chmod 755 /usr/local/bin/minikube
+minikube version
+minikube start
+minikube node add
+
+kubectl create serviceaccount github-actions
+kubectl create namespace php-helloworld
+kubectl create secret docker-registry github-container-registry --namespace=php-helloworld --docker-server=ghcr.io --docker-username=$USER --docker-password=$GH_TOKEN
+
 ```

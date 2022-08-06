@@ -20,10 +20,10 @@ jobs:
     - name: Run tests
       run: ./test
 
-    - name: Executing remote ssh commands using ssh key
+    - name: Deploy
       uses: garygrossgarten/github-action-ssh@release
       with:
         command: cd /var/www/hello-world && git pull
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        privateKey: ${{ secrets.KEY}}
+        privateKey: ${{ secrets.SSH_PRIV_KEY}}
