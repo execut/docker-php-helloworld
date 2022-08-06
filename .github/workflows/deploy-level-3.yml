@@ -8,9 +8,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . -t ghcr.io/execut/php-helloworld:${{ github.sha }}
+
+      - name: Run tests
+        run: docker run ghcr.io/execut/php-helloworld:${{ github.sha }} ./test
+
+      - name: Docker login
+        run: docker login ghcr.io -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
+
+      - name: Publish image
+        run: docker push ghcr.io/execut/php-helloworld:${{ github.sha }}
+
       - name: Set the Kubernetes context
         uses: azure/k8s-set-context@v2
         with:
           method: service-account
           k8s-url: ${{ secrets.KUBE_URL }}
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      - name: Deploy to the Kubernetes cluster
+        uses: azure/k8s-deploy@v1
+        with:
+          namespace: default
+          manifests: |
+            k8s/deployment.yaml
+#            kubernetes/ingress.yaml
+#            kubernetes/service.yaml
+          images: |
+            ghcr.io/execut/php-helloworld:${{ github.sha }}

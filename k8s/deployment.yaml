@@ -3,6 +3,6 @@ spec:
     spec:
       containers:
         - name: php-helloworld
-          image: ghcr.io/execut/php-helloworld:latest
+          image: ghcr.io/execut/php-helloworld
       imagePullSecrets:
         - name: github-container-registry
