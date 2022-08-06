@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      project: php-helloworld
+      app: php-helloworld
   template:
     spec:
       containers:
