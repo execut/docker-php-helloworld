@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions-hub/kubectl@master
         env:
-          KUBE_HOST: ${{ secrets.HOST }}
+          KUBE_HOST: ${{ secrets.KUBE_HOST }}
           KUBE_USERNAME: ${{ secrets.KUBE_USERNAME }}
           KUBE_PASSWORD: ${{ secrets.KUBE_PASSWORD }}
         with:
