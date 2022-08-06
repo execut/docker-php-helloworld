@@ -3,13 +3,15 @@ kind: Deployment
 metadata:
   name: php-helloworld
   labels:
-    app:
-      php-helloworld
+    app: php-helloworld
 spec:
   selector:
     matchLabels:
-      app: php-helloworld
+      project: php-helloworld
   template:
+    metadata:
+      labels:
+        project: php-helloworld
     spec:
       containers:
         - name: php-helloworld
