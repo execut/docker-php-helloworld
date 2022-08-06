@@ -8,7 +8,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: tale/kubectl-action@v1
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_HOST: ${{ secrets.HOST }}
+          KUBE_CERTIFICATE: ${{ secrets.KUBE_CERTIFICATE }}
+          KUBE_USERNAME: ${{ secrets.KUBE_USERNAME }}
+          KUBE_PASSWORD: ${{ secrets.KUBE_PASSWORD }}
         with:
-          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
-      - run: kubectl get pods
+          args: get pods
