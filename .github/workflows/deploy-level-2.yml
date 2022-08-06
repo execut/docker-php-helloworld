@@ -1,7 +1,7 @@
 name: Deploy middle level
 on:
   workflow_run:
-    workflows: [Build, test and publish image]
+    workflows: [Publish image]
     types:
       - completed
 jobs:
