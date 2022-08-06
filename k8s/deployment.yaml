@@ -1,3 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-helloworld
+  labels:
+    app:
+      php-helloworld
 spec:
   template:
     spec:

@@ -1,4 +1,4 @@
-name: Publish image
+name: Deploy easy level
 on:
   push:
     branches: [ "master" ]
