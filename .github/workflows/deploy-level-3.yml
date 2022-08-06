@@ -8,10 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions-hub/kubectl@master
-        env:
-          KUBE_HOST: ${{ secrets.KUBE_HOST }}
-          KUBE_USERNAME: ${{ secrets.KUBE_USERNAME }}
-          KUBE_PASSWORD: ${{ secrets.KUBE_PASSWORD }}
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v2
         with:
-          args: get pods
+          method: service-account
+          k8s-url: ${{ secrets.KUBE_URL }}
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
