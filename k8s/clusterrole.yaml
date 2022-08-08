@@ -7,6 +7,7 @@ rules:
       - ''
       - apps
       - networking.k8s.io
+      - autoscaling
     resources:
       - namespaces
       - deployments
