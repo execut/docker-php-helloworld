@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set the Kubernetes context
+      - name: Set the K8s context
         uses: azure/k8s-set-context@v2
         with:
           method: service-account
@@ -25,5 +25,6 @@ jobs:
           manifests: |
             deploy-level-3/k8s/1-deployment.yaml
             deploy-level-3/k8s/2-service.yaml
+            deploy-level-4/k8s/autoscaling.yaml
           images: |
             ghcr.io/execut/php-helloworld:${{ github.sha }}
