@@ -1,4 +1,4 @@
-name: Deploy easy level
+name: Deploy very easy level
 on:
   push:
     branches: [ "master" ]

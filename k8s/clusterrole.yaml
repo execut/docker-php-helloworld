@@ -14,7 +14,7 @@ rules:
       - ingresses
       - services
       - secrets
-      - hpa
+      - horizontalpodautoscalers
     verbs:
       - create
       - delete

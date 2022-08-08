@@ -1,7 +1,7 @@
-name: Deploy middle level
+name: Deploy hard level
 on:
   workflow_run:
-    workflows: [Deploy easy level]
+    workflows: [Deploy middle level]
     types:
       - completed
 jobs:
@@ -23,7 +23,7 @@ jobs:
         with:
           namespace: default
           manifests: |
-            deploy-level-3/k8s/1-deployment.yaml
-            deploy-level-3/k8s/2-service.yaml
+            deploy-level-4/k8s/1-deployment.yaml
+            deploy-level-4/k8s/2-autoscaling.yaml
           images: |
             ghcr.io/execut/php-helloworld:${{ github.sha }}
