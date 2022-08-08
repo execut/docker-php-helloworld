@@ -14,6 +14,7 @@ rules:
       - ingresses
       - services
       - secrets
+      - hpa
     verbs:
       - create
       - delete
