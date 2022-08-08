@@ -47,27 +47,42 @@ usermod -a -G docker $USER
 ```
 
 ## Level 3:
+### Server configuration
+#### Install Minukube:
 ```shell
 wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo cp minikube-linux-amd64 /usr/local/bin/minikube
 sudo chmod 755 /usr/local/bin/minikube
-minikube version
-minikube start --apiserver-ips=$KUBE_IPS
+minikube start --apiserver-ips="`hostname -I | cut -d' ' -f1`,`minikube ip`,10.96.0.1,127.0.0.1,10.0.0.1"
 minikube node add
 alias kubectl="minikube kubectl -- "
+```
 
-$ kubectl create serviceaccount github-actions
-serviceaccount/github-actions created
-$ kubectl create namespace php-helloworld
-namespace/php-helloworld created
-$ kubectl create secret docker-registry github-container-registry --namespace=php-helloworld --docker-server=ghcr.io --docker-username=$USER --docker-password=$GH_TOKEN
-secret/github-container-registry created
-
+#### Setup reverse-proxy:
+```shell
+apt install nginx
 cd /var/www/hello-world
-$ kubectl apply -f ./k8s/clusterrole.yaml 
-clusterrole.rbac.authorization.k8s.io/continuous-deployment created
+cat ./deploy-level-3/nginx.conf | \
+ sed "s/host-ip/$(hostname -I | cut -d' ' -f1)/" \
+ sed "s/kube-ip/$(minikube ip)/" \
+  > /etc/nginx/nginx.conf
+service nginx reload
+```
 
+#### Kubernetes Github Actions secret configuration 
+```shell
+kubectl create namespace php-helloworld
+kubectl create secret docker-registry github-container-registry --namespace=php-helloworld --docker-server=ghcr.io --docker-username=$USER --docker-password=$GH_TOKEN
+kubectl apply -f ./k8s/clusterrole.yaml 
+```
+
+#### Kubernetes secret configuration
+```shell
+kubectl create serviceaccount github-actions
 kubectl create clusterrolebinding continuous-deployment \
-    --clusterrole=continuous-deployment \
-    --serviceaccount=default:github-actions
+--clusterrole=continuous-deployment \
+--serviceaccount=default:github-actions
+kubectl apply -f ./k8s/github-actions-secret.yaml
+# Copy out to github secret KUBERNETES_SECRET
+kubectl get secret github-actions-secret -o yaml
 ```
