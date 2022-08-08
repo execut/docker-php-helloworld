@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-helloworld-service
+  labels:
+    app: php-helloworld
+spec:
+  selector:
+    project: php-helloworld
+  ports:
+    - name: app-listener
+      protocol: TCP
+      port: 80 # Port on load balancer
+      targetPort: 80 # Port on pod
+  type: NodePort

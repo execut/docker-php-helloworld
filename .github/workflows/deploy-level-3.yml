@@ -22,6 +22,8 @@ jobs:
         uses: azure/k8s-deploy@v4.3
         with:
           namespace: default
-          manifests: deploy-level-3/k8s/deployment.yaml
+          manifests: |
+            deploy-level-3/k8s/1-deployment.yaml
+            deploy-level-3/k8s/2-service.yaml
           images: |
             ghcr.io/execut/php-helloworld:${{ github.sha }}
